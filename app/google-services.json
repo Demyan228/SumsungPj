@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1094328359262",
+    "project_id": "bdformyapp",
+    "storage_bucket": "bdformyapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094328359262:android:fbf2ffa8e47f68e5e6d7cf",
+        "android_client_info": {
+          "package_name": "com.example.sumsungproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094328359262-f86fhqh9p4gal39n120tfodcojhsc6qr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_n0TRnO_ViJs--WTOL6T-sVhT_0CuYUw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094328359262-f86fhqh9p4gal39n120tfodcojhsc6qr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
