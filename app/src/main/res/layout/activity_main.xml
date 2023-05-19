@@ -8,8 +8,8 @@
 
     <EditText
         android:id="@+id/edTelephone"
-        android:layout_width="211dp"
-        android:layout_height="52dp"
+        android:layout_width="256dp"
+        android:layout_height="54dp"
         android:layout_marginTop="164dp"
         android:hint="номер телефона"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,19 +18,30 @@
 
     <EditText
         android:id="@+id/edPass"
-        android:layout_width="211dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="296dp"
+        android:layout_width="255dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="240dp"
         android:hint="пароль"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/msg"
+        android:layout_width="250dp"
+        android:layout_height="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/enter_bt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edPass"
+        app:layout_constraintVertical_bias="0.107" />
 
     <Button
         android:id="@+id/enter_bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="172dp"
+        android:layout_marginTop="104dp"
         android:onClick="enter_acc"
         android:text="Войти"
         app:layout_constraintEnd_toEndOf="parent"
