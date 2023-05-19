@@ -23,8 +23,8 @@ import java.util.HashMap;
 public class AcountActivity extends AppCompatActivity {
     ListView punktList;
     int user_id;
-    public String USER_ID_KEY= "USER_ID";
-    public String PUNKT_ID_KEY = "PUNKT_ID";
+    public String USER_PH0NE_KEY= "USER_PHONE";
+    public String PUNKT_NAME_KEY = "PUNKT_NAME";
     String PUNKT_DB_KEY = "Punkt";
     DatabaseReference punktRef;
     ArrayList<Punkt> punkts = new ArrayList<>();
@@ -34,7 +34,7 @@ public class AcountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acount);
-        user_id = getIntent().getIntExtra(USER_ID_KEY, 0);
+        user_id = getIntent().getIntExtra(USER_PH0NE_KEY, 0);
         punktList = findViewById(R.id.list_view);
         punktRef = FirebaseDatabase.getInstance().getReference(PUNKT_DB_KEY);
         getDataFromDB();
@@ -42,8 +42,8 @@ public class AcountActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(AcountActivity.this, PunktActivity.class);
-                intent.putExtra(USER_ID_KEY, user_id);
-                intent.putExtra(PUNKT_ID_KEY, punkts.get(position).id);
+                intent.putExtra(USER_PH0NE_KEY, user_id);
+                intent.putExtra(PUNKT_NAME_KEY, punkts.get(position).address);
                 startActivity(intent);
             }
         });

@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    public String USER_ID_KEY= "USER_ID";
+    public String USER_PH0NE_KEY= "USER_PHONE";
     DatabaseReference drRef;
     EditText telephone, password;
     TextView msg;
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         for (User u: users){
             if (u.telephone.equals(telNumb) && pass.equals(u.password)){
                 Intent intent = new Intent(MainActivity.this, AcountActivity.class);
-                intent.putExtra(USER_ID_KEY, u.id);
+                intent.putExtra(USER_PH0NE_KEY, u.telephone);
                 startActivity(intent);
                 finish();
             }
