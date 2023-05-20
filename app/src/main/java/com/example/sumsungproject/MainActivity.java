@@ -47,15 +47,19 @@ public class MainActivity extends AppCompatActivity {
         // проверка корректности введенных данных
         String telNumb = telephone.getText().toString();
         String pass = password.getText().toString();
+        boolean flag = false;
         for (User u: users){
             if (u.telephone.equals(telNumb) && pass.equals(u.password)){
                 Intent intent = new Intent(MainActivity.this, AcountActivity.class);
                 intent.putExtra(USER_PH0NE_KEY, u.telephone);
                 startActivity(intent);
+                flag = true;
                 finish();
             }
         }
-        msg.setText("Неправильный логин или пароль");
+        if (!flag){
+            msg.setText("Неправильный логин или пароль");
+        }
 
     }
 

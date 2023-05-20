@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,33 +19,39 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class AcountActivity extends AppCompatActivity {
     ListView punktList;
-    int user_id;
+    String user_id;
     public String USER_PH0NE_KEY= "USER_PHONE";
     public String PUNKT_NAME_KEY = "PUNKT_NAME";
     String PUNKT_DB_KEY = "Punkt";
     DatabaseReference punktRef;
     ArrayList<Punkt> punkts = new ArrayList<>();
+    ArrayList<String> punktsKeys = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acount);
-        user_id = getIntent().getIntExtra(USER_PH0NE_KEY, 0);
+        user_id = getIntent().getStringExtra(USER_PH0NE_KEY);
         punktList = findViewById(R.id.list_view);
         punktRef = FirebaseDatabase.getInstance().getReference(PUNKT_DB_KEY);
+        //Calendar calendar = Calendar.getInstance();
+        //Punkt punkt = new Punkt(punktRef.getKey(), "Кузбыкова ап18", calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), 3);
+        //punktRef.push().setValue(punkt);
         getDataFromDB();
         punktList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(AcountActivity.this, PunktActivity.class);
                 intent.putExtra(USER_PH0NE_KEY, user_id);
-                intent.putExtra(PUNKT_NAME_KEY, punkts.get(position).address);
+                intent.putExtra(PUNKT_NAME_KEY, punktsKeys.get(position));
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -56,6 +63,7 @@ public class AcountActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds: snapshot.getChildren()) {
                     Punkt punkt = ds.getValue(Punkt.class);
+                    punktsKeys.add(ds.getKey());
                     punkts.add(punkt);
                 }
                 String[] keyArray = {"address", "day1", "day2", "day3"};
@@ -72,7 +80,6 @@ public class AcountActivity extends AppCompatActivity {
                 }
                 SimpleAdapter simpleAdapter = new SimpleAdapter(AcountActivity.this,
                         listForAdapter, R.layout.punkt_list_el, keyArray, idArray);
-
                 punktList.setAdapter(simpleAdapter);
                 simpleAdapter.notifyDataSetChanged();
             }
