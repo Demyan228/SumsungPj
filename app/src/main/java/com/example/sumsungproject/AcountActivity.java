@@ -73,9 +73,17 @@ public class AcountActivity extends AppCompatActivity {
                 for (int i = 0; i < punkts.size(); i++) {
                     HashMap<String, Object> bookMap = new HashMap<>();
                     bookMap.put(keyArray[0], punkts.get(i).address);
-                    bookMap.put(keyArray[1], R.drawable.free);
-                    bookMap.put(keyArray[2], R.drawable.free);
-                    bookMap.put(keyArray[3], R.drawable.free);
+                    for (int j=1; j<=3;j++) {
+                        boolean flag = true;
+                        for (HashMap<String, String> map:punkts.get(i).telephones.get("i" + (j - 1)).values()){
+                            if (map.containsValue("0")) {
+                                flag = false;
+                                break;
+                            }
+                        }
+                        if (flag) bookMap.put(keyArray[j], R.drawable.busy);
+                        else bookMap.put(keyArray[j], R.drawable.free);
+                    }
                     listForAdapter.add(bookMap);
                 }
                 SimpleAdapter simpleAdapter = new SimpleAdapter(AcountActivity.this,

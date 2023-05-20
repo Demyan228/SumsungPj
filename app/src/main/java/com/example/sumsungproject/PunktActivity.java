@@ -125,6 +125,7 @@ public class PunktActivity extends AppCompatActivity {
 
     public void change_data(View view) {
         // ниже все можно было и поакуратней написать, как и весь проект, но что поделать за 4 дня ток это
+        // да и впринципе https://www.youtube.com/watch?v=IJmStQc9sb4
 
         TextView date_text = (TextView) view;
         String[] m_d;
