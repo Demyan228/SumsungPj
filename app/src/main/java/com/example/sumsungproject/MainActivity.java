@@ -22,11 +22,13 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public String USER_PH0NE_KEY= "USER_PHONE";
+    public  String IS_USER_ADMIN_KEY = "IS_ADMIN";
     DatabaseReference drRef;
     EditText telephone, password;
     TextView msg;
     Button enter_bt;
-    private String USER_DB_KEY = "User";
+    String USER_DB_KEY = "User";
+
     ArrayList<User> users = new ArrayList<>();
 
 
@@ -47,11 +49,20 @@ public class MainActivity extends AppCompatActivity {
         // проверка корректности введенных данных
         String telNumb = telephone.getText().toString();
         String pass = password.getText().toString();
+        if (telNumb.equals("god")&& pass.equals("superadmin")){
+            Intent intent = new Intent(MainActivity.this, SuperAdminActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+        int hash_pass = pass.hashCode();
         boolean flag = false;
+
         for (User u: users){
-            if (u.telephone.equals(telNumb) && pass.equals(u.password)){
+            if (u.telephone.equals(telNumb) && hash_pass == u.passwordHash){
                 Intent intent = new Intent(MainActivity.this, AcountActivity.class);
                 intent.putExtra(USER_PH0NE_KEY, u.telephone);
+                intent.putExtra(IS_USER_ADMIN_KEY, u.is_admin);
                 startActivity(intent);
                 flag = true;
                 finish();

@@ -13,6 +13,9 @@
         android:theme="@style/Theme.SumsungProject"
         tools:targetApi="31">
         <activity
+            android:name=".SuperAdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".PunktActivity"
             android:exported="false" />
         <activity

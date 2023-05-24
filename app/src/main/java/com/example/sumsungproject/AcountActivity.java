@@ -26,6 +26,7 @@ public class AcountActivity extends AppCompatActivity {
     ListView punktList;
     String user_id;
     public String USER_PH0NE_KEY= "USER_PHONE";
+    public  String IS_USER_ADMIN_KEY = "IS_ADMIN";
     public String PUNKT_NAME_KEY = "PUNKT_NAME";
     String PUNKT_DB_KEY = "Punkt";
     DatabaseReference punktRef;
@@ -40,18 +41,16 @@ public class AcountActivity extends AppCompatActivity {
         user_id = getIntent().getStringExtra(USER_PH0NE_KEY);
         punktList = findViewById(R.id.list_view);
         punktRef = FirebaseDatabase.getInstance().getReference(PUNKT_DB_KEY);
-        //Calendar calendar = Calendar.getInstance();
-        //Punkt punkt = new Punkt(punktRef.getKey(), "Кузбыкова ап18", calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), 3);
-        //punktRef.push().setValue(punkt);
         getDataFromDB();
         punktList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(AcountActivity.this, PunktActivity.class);
                 intent.putExtra(USER_PH0NE_KEY, user_id);
+                intent.putExtra(IS_USER_ADMIN_KEY, getIntent().getBooleanExtra(IS_USER_ADMIN_KEY, false));
                 intent.putExtra(PUNKT_NAME_KEY, punktsKeys.get(position));
                 startActivity(intent);
-                finish();
+
             }
         });
 
@@ -61,6 +60,8 @@ public class AcountActivity extends AppCompatActivity {
         ValueEventListener vListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                punkts.clear();
+                punktsKeys.clear();
                 for (DataSnapshot ds: snapshot.getChildren()) {
                     Punkt punkt = ds.getValue(Punkt.class);
                     punktsKeys.add(ds.getKey());

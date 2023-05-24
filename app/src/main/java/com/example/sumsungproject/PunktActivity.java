@@ -41,9 +41,11 @@ public class PunktActivity extends AppCompatActivity {
     String PUNKT_DB_KEY = "Punkt";
 
     public String USER_PH0NE_KEY= "USER_PHONE";
+    public  String IS_USER_ADMIN_KEY = "IS_ADMIN";
     public String PUNKT_NAME_KEY = "PUNKT_NAME";
 
     String user_phone, punktKey;
+    boolean is_admin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class PunktActivity extends AppCompatActivity {
         punktRef = FirebaseDatabase.getInstance().getReference(PUNKT_DB_KEY);
         Intent intent = getIntent();
         user_phone =intent.getStringExtra(USER_PH0NE_KEY);
+        is_admin = intent.getBooleanExtra(IS_USER_ADMIN_KEY, false);
         punktKey = intent.getStringExtra(PUNKT_NAME_KEY);
         punktName = findViewById(R.id.punkt_name);
         sched = findViewById(R.id.shed);
@@ -139,7 +142,7 @@ public class PunktActivity extends AppCompatActivity {
         date.setText("время\\места");
         date.setGravity(Gravity.CENTER);
         tableRow.addView(date);
-        for (int i=1; i <= 3; i++){
+        for (int i=1; i <= punkt.n_workers; i++){
             TextView textView = new TextView(this);
             textView.setText("работник " + i);
             textView.setGravity(Gravity.CENTER);
@@ -169,8 +172,8 @@ public class PunktActivity extends AppCompatActivity {
                 is_free.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (is_admin) return;
                         String tel = punkt.telephones.get("i" + l).get("i" + finalJ).get("i" + finalI);
-                        Log.e("tag", user_phone);
                         if (tel.equals(user_phone)) {
                             ImageButton im = (ImageButton) v;
                             Bitmap img = BitmapFactory.decodeResource(PunktActivity.this.getResources(), R.drawable.free);
@@ -179,6 +182,10 @@ public class PunktActivity extends AppCompatActivity {
                             punkt.telephones.get("i" + l).get("i" + finalJ).put("i" + finalI, "0");
                             punktRef.child(punktKey).removeValue();
                             punktRef.child(punktKey).setValue(punkt);
+                            return;
+                        }
+                        if (tel.equals("0") && punkt.telephones.get("i" + l).get("i" + finalJ).containsValue(user_phone)){
+                            Toast.makeText(PunktActivity.this, "Вы уже зарегистрировались на это время", Toast.LENGTH_SHORT).show();
                             return;
                         }
                         if (tel.equals("0")) {
@@ -191,7 +198,7 @@ public class PunktActivity extends AppCompatActivity {
                             punktRef.child(punktKey).setValue(punkt);
                         }
                         else {
-                            Toast.makeText(PunktActivity.this, "Эта дата занята", Toast.LENGTH_LONG).show();
+                            Toast.makeText(PunktActivity.this, "Это время занято", Toast.LENGTH_SHORT).show();
                         }
 
 
